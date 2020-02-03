@@ -12,6 +12,11 @@ function newBoggleBoard() {
  */
 function printBoggleBoard(boggleBoard) {
   for (let row of boggleBoard) {
+    for (let place of row) {
+      if (place === 'Q') {
+        place = 'Qu';
+      }
+    }
     console.log(row.join(' '));
   }
 }
