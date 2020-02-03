@@ -11,12 +11,26 @@ function newBoggleBoard() {
  * Prints out a boggle board.
  */
 function printBoggleBoard(boggleBoard) {
-  for (let row of boggleBoard) {
-    for (let place of row) {
-      if (place === 'Q') {
-        place = 'Qu';
+  let includesQu = false;
+  for (let i = 0; i < boggleBoard.length; i++) {
+    for (let j = 0; j < boggleBoard[i].length; j++) {
+      if (boggleBoard[i][j] === 'Q') {
+        boggleBoard[i][j] = 'Qu';
+        includesQu = true;
       }
     }
+  }
+
+  if (includesQu) {
+    for (let i = 0; i < boggleBoard.length; i++) {
+      for (let j = 0; j < boggleBoard[i].length; j++) {
+        boggleBoard[i][j] = boggleBoard[i][j].padEnd(2);
+      }
+    }
+  }
+
+
+  for (let row of boggleBoard) {
     console.log(row.join(' '));
   }
 }
@@ -45,13 +59,13 @@ function shake(boggleBoard) {
     'DEILRX',
   ];
 
-  for (let j = 0; j < boggleBoard.length; j++) {
-    for (let i = 0; i < boggleBoard[j].length; i++) {
+  for (let i = 0; i < boggleBoard.length; i++) {
+    for (let j = 0; j < boggleBoard[i].length; j++) {
       // NOTE: I use splice below to prevent repetition of die on the board
       let die = dice.splice(Math.floor(Math.random() * dice.length),1)[0];
       // NOTE: Don't need slice here, bc only assigning one of the sides of the die to be 'up'
       let char = die[Math.floor(Math.random() * 6)];
-      boggleBoard[j][i] = char;
+      boggleBoard[i][j] = char;
     }
   }
 
