@@ -20,7 +20,12 @@ function printBoggleBoard(boggleBoard) {
  * Shake a boggle board and fill it with letters.
  */
 function shake(boggleBoard) {
-  // This is your job. :)
+  let alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  for (let row of boggleBoard) {
+    for (let i = 0; i < row.length; i++) {
+      row[i] = alphabet[Math.floor(alphabet.length * Math.random())];
+    }
+  }
   return boggleBoard;
 }
 
