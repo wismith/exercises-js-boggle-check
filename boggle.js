@@ -20,6 +20,7 @@ function printBoggleBoard(boggleBoard) {
  * Shake a boggle board and fill it with letters.
  */
 function shake(boggleBoard) {
+  // Create array of 6-sided dice
   let dice = [
     'AAEEGN',
     'ELRTTY',
@@ -41,10 +42,11 @@ function shake(boggleBoard) {
 
   for (let j = 0; j < boggleBoard.length; j++) {
     for (let i = 0; i < boggleBoard[j].length; i++) {
-      let die = dice.splice(Math.floor(Math.random()*dice.length),1)[0];
-      let char = die[Math.floor(Math.random()*die.length)];
+      // NOTE: I use splice below to prevent repetition of die on the board
+      let die = dice.splice(Math.floor(Math.random() * dice.length),1)[0];
+      // NOTE: Don't need slice here, bc only assigning one of the sides of the die to be 'up'
+      let char = die[Math.floor(Math.random() * 6)];
       boggleBoard[j][i] = char;
-      console.log
     }
   }
 
@@ -53,6 +55,6 @@ function shake(boggleBoard) {
 
 let board = newBoggleBoard();
 
-board = shake(board);
+shake(board);
 
 printBoggleBoard(board);
