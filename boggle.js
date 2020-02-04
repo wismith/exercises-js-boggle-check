@@ -94,8 +94,51 @@ function shake(boggleBoard) {
   return boggleBoard;
 }
 
+
+function boggleBoardContainsWord(board, word) {
+  if (word.length > board.length) {
+    return false;
+  }
+
+  let lettersExist = [];
+  for (let letter of word.split('')) {
+    let exists = false;
+    for (let row of board) {
+      if (row.includes(letter)) {
+        exists = true;
+      }
+    }
+    lettersExist.push(exists);
+  }
+  if (lettersExist.includes(false)) {
+    return false;
+  }
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i].join('').includes(word) || board[i].reverse().join('').includes(word)) {
+      return true;
+    }
+  }
+  let columns = [];
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board.length; j++) {
+      let column = [];
+      column.push(board[j][i]);
+    }
+  }
+  for (let column of columns) {
+    if (column.join('').includes(word) || column.reverse().join('').includes(word)) {
+      return true;
+    }
+  }
+  return false;
+
+}
+
 let board = newBoggleBoard();
 
 shake(board);
 
 printBoggleBoard(board);
+
+console.log(boggleBoardContainsWord(board, 'IS'));
