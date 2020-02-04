@@ -11,6 +11,7 @@ function newBoggleBoard() {
  * Prints out a boggle board.
  */
 function printBoggleBoard(boggleBoard) {
+  /*
   let includesQu = false;
   for (let i = 0; i < boggleBoard.length; i++) {
     for (let j = 0; j < boggleBoard[i].length; j++) {
@@ -20,7 +21,8 @@ function printBoggleBoard(boggleBoard) {
       }
     }
   }
-
+  */
+  /*
   if (includesQu) {
     for (let i = 0; i < boggleBoard.length; i++) {
       for (let j = 0; j < boggleBoard[i].length; j++) {
@@ -28,25 +30,39 @@ function printBoggleBoard(boggleBoard) {
       }
     }
   }
-
-  for (let row of boggleBoard) {
-    console.log(row.join(' '));
+  */
+  function formatRow(row) {
+    let formattedRow = [];
+    for (let letter of row) {
+      if (letter === 'Q') {
+        formattedRow.push('Qu');
+      } else {
+        formattedRow.push(letter.padEnd(2));
+      }
+    }
+    return formattedRow;
   }
+
+  console.log();
+  for (let row of boggleBoard) {
+    console.log(formatRow(row).join(' '));
+  }
+  console.log();
 }
 
 // Function to shuffle array, courtesy of Lily
 function shuffle(array) {
-  var currentIndex = array.length; // temporaryValue, randomIndex;
+  let currentIndex = array.length; // temporaryValue, randomIndex;
 
   // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+  while (currentIndex !== 0) {
 
     // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    let randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
 
     // And swap it with the current element.
-    temporaryValue = array[currentIndex];
+    let temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
@@ -80,20 +96,14 @@ function shake(boggleBoard) {
 
   let randomDice = shuffle(dice);
 
-
   for (let i = 0; i < boggleBoard.length; i++) {
     for (let j = 0; j < boggleBoard[i].length; j++) {
-      // NOTE: I use splice below to prevent repetition of die on the board
-      let die = randomDice.pop();
-      // NOTE: Don't need slice here, bc only assigning one of the sides of the die to be 'up'
-      let char = die[Math.floor(Math.random() * 6)];
-      boggleBoard[i][j] = char;
+      boggleBoard[i][j] = randomDice[i * board.length + j][Math.floor(Math.random() * dice[0].length)];
     }
   }
 
   return boggleBoard;
 }
-
 
 function boggleBoardContainsWord(board, word) {
   if (word.length > board.length) {
@@ -101,7 +111,7 @@ function boggleBoardContainsWord(board, word) {
   }
 
   let lettersExist = [];
-  for (let letter of word.split('')) {
+  for (let letter of word) {
     let exists = false;
     for (let row of board) {
       if (row.includes(letter)) {
@@ -132,7 +142,6 @@ function boggleBoardContainsWord(board, word) {
     }
   }
   return false;
-
 }
 
 let board = newBoggleBoard();
@@ -140,5 +149,3 @@ let board = newBoggleBoard();
 shake(board);
 
 printBoggleBoard(board);
-
-console.log(boggleBoardContainsWord(board, 'IS'));
